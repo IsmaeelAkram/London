@@ -1,0 +1,25 @@
+{{!< default}}
+
+<header class="page-head">
+    <h1 class="page-head-title">GitHub Repos</h1>
+    <p id="loading-text">Loading... <br/><br/>If it does not load, <a href=".">refresh the page.</a></p>
+    <div id="repos-list"></div>
+    <a class="error-link" href="{{@site.url}}">Go home →</a>
+</header>
+
+<script>
+    // https://api.github.com/users/ismaeelakram/repos
+    fetch("https://api.github.com/users/ismaeelakram/repos")
+    .then(res => res.json())
+    .then(json => {
+        let reposString = "";
+        json.forEach(repo => {
+            reposString += `<tr><td><span><a href="https://github.com/ismaeelakram/${repo.name}" class="repo-title">${repo.name}</a></span></td><td><span class="repo-description">${repo.description || "No description"}</span></td></tr>`;
+            document.getElementById("loading-text").innerHTML = "";
+            document.getElementById("repos-list").innerHTML = `<table>${reposString}</table>`;
+        });
+    })
+    .catch(err => {
+        document.getElementById("repos-list").innerHTML = `<li>An error has occured! Please try again later.<br/>Error: <code>${err}</code></li>`
+    })
+</script>
