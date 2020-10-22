@@ -3,14 +3,14 @@ on:
   pull_request:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        node: [ '10' ]
+        node: ["10"]
     name: Node ${{ matrix.node }}
     steps:
       - uses: actions/checkout@v2
